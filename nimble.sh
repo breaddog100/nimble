@@ -20,6 +20,7 @@ function install_node() {
     go version
 
     # 克隆仓库
+    rm -rf $HOME/nimble
     mkdir -p $HOME/nimble && cd $HOME/nimble
     git clone https://github.com/nimble-technology/wallet-public.git
     cd wallet-public
@@ -27,16 +28,23 @@ function install_node() {
     
     # 显卡信息
     lspci | grep VGA
+	echo "完成部署"
+}
+
+# 创建钱包
+function create_wallet(){
 
     # 创建钱包
     echo "至少创建两个钱包，一个作为主钱包，一个作为挖矿钱包。"
     read -p "请输入钱包数量:" wallet_count
     for i in $(seq 1 $wallet_count); do
         wallet_name="wallet$i"
-        nimble-networkd keys add $wallet_name
+        if ! nimble-networkd keys add $wallet_name; then
+		    nimble-networkd keys add $wallet_name --keyring-backend test
+		fi
         echo "钱包 $wallet_name 创建成功"
     done
-	echo "完成部署"
+
 }
 
 # 开始挖矿
@@ -70,15 +78,17 @@ function main_menu() {
 	echo "最低配置：8C16G256G+RTX2080，推荐配置：16C32G256G+RTX3090"
     echo "请选择要执行的操作:"
     echo "1. 部署节点"
-    echo "2. 开始挖矿"
-    echo "3. 查看日志"
+    echo "2. 创建钱包"
+    echo "3. 开始挖矿"
+    echo "4. 查看日志"
     echo "0. 退出脚本exit"
     read -p "请输入选项: " OPTION
 
     case $OPTION in
     1) install_node ;;
-    2) start_mining ;;
-    3) view_logs ;;
+    2) create_wallet ;;
+    3) start_mining ;;
+    4) view_logs ;;
     0) echo "退出脚本。"; exit 0 ;;
     *) echo "无效选项，请重新输入。"; sleep 3 ;;
     esac
