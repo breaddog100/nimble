@@ -24,6 +24,9 @@ function install_node() {
     git clone https://github.com/nimble-technology/wallet-public.git
     cd wallet-public
     make install
+    
+    # 显卡信息
+    lspci | grep VGA
 
     # 创建钱包
     echo "至少创建两个钱包，一个作为主钱包，一个作为挖矿钱包。"
@@ -76,6 +79,7 @@ function main_menu() {
     1) install_node ;;
     2) start_mining ;;
     3) view_logs ;;
+    0) echo "退出脚本。"; exit 0 ;;
     *) echo "无效选项，请重新输入。"; sleep 3 ;;
     esac
 }
