@@ -65,7 +65,7 @@ function start_mining(){
 # 查看日志
 function view_logs(){
 	clear
-	echo "即将进入screen，查看完请ctrl + a + d 退出"
+	echo "即将进入screen，查看完请ctrl + a + d 退出，5秒后开始输出日志"
 	sleep 5
 	screen -r nimble
 }
