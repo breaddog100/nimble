@@ -29,7 +29,7 @@ function install_node() {
     git clone https://github.com/nimble-technology/nimble-miner-public.git
     cd nimble-miner-public
     make install
-    source ./nimenv_localminers/bin/activate
+    source $HOME/nimble/nimble-miner-public/nimenv_localminers/bin/activate
     # 显卡信息
     lspci | grep VGA
 	echo "完成部署"
@@ -57,7 +57,8 @@ function start_mining(){
     # 启动挖矿
     read -p "挖矿钱包地址:" wallet_addr
     export wallet_addr
-    cd $HOME/nimble
+    cd $HOME/nimble/nimble-miner-public
+    source $HOME/nimble/nimble-miner-public/nimenv_localminers/bin/activate
     screen -dmS nimble bash -c "make run addr=$wallet_addr"
     
 }
