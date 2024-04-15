@@ -65,33 +65,37 @@ function start_mining(){
 # 查看日志
 function view_logs(){
 	clear
-	echo "即将进入screen，查看完请ctrl + a + d 退出，5秒后开始输出日志"
+	echo "5秒后进入screen，查看完请ctrl + a + d 退出"
 	sleep 5
 	screen -r nimble
 }
 
 # 主菜单
 function main_menu() {
-    clear
-    echo "===================Nimble一键部署脚本==================="
-	echo "BreadDog出品，电报：https://t.me/breaddog"
-	echo "最低配置：8C16G256G+RTX2080，推荐配置：16C32G256G+RTX3090"
-    echo "请选择要执行的操作:"
-    echo "1. 部署节点"
-    echo "2. 创建钱包"
-    echo "3. 开始挖矿"
-    echo "4. 查看日志"
-    echo "0. 退出脚本exit"
-    read -p "请输入选项: " OPTION
-
-    case $OPTION in
-    1) install_node ;;
-    2) create_wallet ;;
-    3) start_mining ;;
-    4) view_logs ;;
-    0) echo "退出脚本。"; exit 0 ;;
-    *) echo "无效选项，请重新输入。"; sleep 3 ;;
-    esac
+	while true; do
+	    clear
+	    echo "===================Nimble一键部署脚本==================="
+		echo "BreadDog出品，电报：https://t.me/breaddog"
+		echo "最低配置：8C16G256G+RTX2080，推荐配置：16C32G256G+RTX3090"
+	    echo "请选择要执行的操作:"
+	    echo "1. 部署节点"
+	    echo "2. 创建钱包"
+	    echo "3. 开始挖矿"
+	    echo "4. 查看日志"
+	    echo "0. 退出脚本exit"
+	    read -p "请输入选项: " OPTION
+	
+	    case $OPTION in
+	    1) install_node ;;
+	    2) create_wallet ;;
+	    3) start_mining ;;
+	    4) view_logs ;;
+	    0) echo "退出脚本。"; exit 0 ;;
+	    *) echo "无效选项，请重新输入。"; sleep 3 ;;
+	    esac
+	    echo "按任意键返回主菜单..."
+        read -n 1
+    done
 }
 
 main_menu
