@@ -5,22 +5,22 @@ SCRIPT_PATH="$HOME/nimble.sh"
 
 # 节点安装功能
 function install_node() {
-    apt update
-    apt install -y git python3-venv bison screen binutils gcc make bsdmainutils python3-pip
+    sudo apt update
+    sudo apt install -y git python3-venv bison screen binutils gcc make bsdmainutils python3-pip
 
 	# 安装numpy
-    pip install numpy==1.24.4
+    sudo pip install numpy==1.24.4
 
     # 安装GO
-    rm -rf /usr/local/go
+    sudo rm -rf /usr/local/go
     wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz -P /tmp/
-    tar -C /usr/local -xzf /tmp/go1.22.1.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf /tmp/go1.22.1.linux-amd64.tar.gz
     echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bashrc
     export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
     go version
 
     # 克隆仓库
-    rm -rf $HOME/nimble
+    sudo rm -rf $HOME/nimble
     mkdir -p $HOME/nimble && cd $HOME/nimble
     git clone https://github.com/nimble-technology/wallet-public.git
     cd wallet-public
@@ -60,7 +60,9 @@ function start_mining(){
     cd $HOME/nimble/nimble-miner-public
     source $HOME/nimble/nimble-miner-public/nimenv_localminers/bin/activate
     screen -dmS nimble bash -c "make run addr=$wallet_addr"
-    
+    echo "ctrl + a + d 退出"
+	sleep 2
+	screen -r nimble
 }
 
 # 查看日志
